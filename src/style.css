@@ -1,0 +1,139 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+:root {
+  --light-green: #4ade80;
+  --medium-green: #22c55e;
+  --hover-green: #86efac;
+  --clicked-green: #15803d;
+  --border-green: #22c55e;
+  --edge-green: #bbf7d0;
+  --shadow-green: #052e16;
+}
+
+
+body {
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+  z-index: 1;
+  background-color: var(--light-green);
+  padding: 1rem;
+}
+
+.logo{
+  width: 3rem;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+nav {
+  font-size: 1.6rem;
+  font-weight: bold;
+  width: 10rem;
+  background-color: var(--light-green);
+  box-shadow: 0px 1px 4px 0px var(--clicked-green);
+}
+nav svg {
+  width: 3rem;
+}
+
+.nav-buttons {
+  display: grid;
+}
+.nav-buttons button {
+  background-color: var(--light-green);
+  border: none;
+  padding: 1rem 0rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  justify-items: start;
+  align-items: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-right: 0.6rem solid var(--border-green);
+}
+nav button:not(.projects-button):hover {
+  background-color: var(--border-green);
+}
+nav button:not(.projects-button):focus {
+  background-color: var(--border-green);
+  border-right: 1rem solid var(--clicked-green);
+}
+.projects-button-wrapper{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+.projects-button:hover{
+  fill: #f0fdf4;
+}
+
+.project-header {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 4px 0px 4px 0px var(--shadow-green);
+}
+.homepage-title {
+  margin-right: 1rem;
+  font-size: 3rem;
+}
+.add-task {
+  background: none;
+  border: none;
+  fill: var(--medium-green);
+  width: 2.5rem;
+  height: 2rem;
+  border-radius: 0.3rem;
+  box-shadow: 0px 0px 2px 0px var(--shadow-green);
+  line-height: 0;
+}
+
+.add-task svg:hover{
+  fill: var(--hover-green);
+}
+.add-task svg:active{
+  fill: var(--clicked-green);
+}
+
+.task {
+  font-size: 0.7rem;
+}
+
+.high {
+  background-color: rgba(255, 94, 94, 0.26);
+}
+.high:hover {
+  background-color: rgba(255, 117, 117, 0.26);
+}
+.medium {
+  background-color: rgba(255, 255, 118, 0.288);
+}
+.medium:hover{
+  background-color: rgba(255, 255, 158, 0.288);
+}
+.low {
+  background-color: rgba(113, 255, 113, 0.267);
+}
+.low:hover{
+  background-color: rgba(150, 255, 150, 0.267);
+}
+
+footer {
+  display: flex;
+}
