@@ -1,12 +1,4 @@
-export function createNewTask(name, description, duDate, priority, project){
-  const task = new Task(name, description, duDate, priority);
-  console.log(project);
-  project.addToLibrary(task);
-  return task;
-}
-
-
-class Task {
+export class Task {
   constructor(name="", description="", dueDate="", priority=""){
     this.name = name;
     this.description = description;
@@ -45,18 +37,16 @@ class Task {
     this.priority = priority;
   }
 }
-export function createNewProject(name){
-  const project = new Project(name);
-  allProjects.push(project);
-  return project;
-}
-class Project {
+export class Project {
   constructor(name){
     this.name = name;
     this.library = [];
   }
-  addToLibrary(task){
+  addToTaskList(task){
     this.library.push(task);
+  }
+  removeFromTaskList(index){
+    this.library.splice(this.library.index,1);
   }
 };
 

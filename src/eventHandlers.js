@@ -1,15 +1,21 @@
-import { createNewTask, createNewProject, allProjects } from "./task";
-import { addHtmlElement, createTaskElement } from "./domUtils";
+import { Task, Project, allProjects} from "./task";
+import { updateDOM, createProjectElement, createTaskElement } from "./domUtils";
 
 const form = document.querySelector('form');
 const dialog = document.querySelector('dialog');
 const close = document.querySelector('.cancel');
-let lastContainer = null;
+let task_count = 0;
 
-export const handleNewTask = (projectContainer)=>{
-  lastContainer = projectContainer;
-  console.log(lastContainer);
+export const handleNewTask = ()=>{
   dialog.showModal();
+}
+
+export const handleRemoveTask = (e,currentProject) => {
+  const project = allProjects.find(project => project.name = currentProject);
+  const currentTaskNumber = e.target.parentElement.getAttribute('task-number');
+  //left off here
+  project.removeFromTaskList(currentTaskNumber);
+  task_count--;
 }
 
 form.addEventListener('submit', (e) => {
@@ -19,10 +25,11 @@ form.addEventListener('submit', (e) => {
   const descriptionInput = formData.get("description");
   const priorityInput = formData.get("priority");
   const projectInput = formData.get("project-name").toLowerCase();
-  const project = allProjects.find(project => project.name == projectInput);
-  const newTask = createNewTask(titleInput,descriptionInput,"",priorityInput, project);
-  const taskElement = createTaskElement(lastContainer, newTask);
-  taskElement.classList.add(priorityInput);
+  const currentProject = allProjects.find(project => project.name == projectInput);
+  const newTask = new Task(titleInput,descriptionInput,"",priorityInput);
+  task_count++;
+  currentProject.addToTaskList(newTask);
+  createTaskElement(currentProject, newTask, task_count);
   dialog.close();
 });
 

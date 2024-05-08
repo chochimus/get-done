@@ -1,7 +1,11 @@
-import {loadHome} from './loadHome';
+import { createProjectElement, updateDOM } from "./domUtils";
+import { allProjects } from "./task";
 import "./style.css"
 
-loadHome();
+function loadHomePage(){
+  updateDOM(allProjects); 
+}
+loadHomePage();
 /* currently
 want to create a home page that you can put any task, 
 once that functionality is done I will create projects that can hold
