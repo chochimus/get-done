@@ -35,7 +35,7 @@
     <div class="projects">
     </div>
   </div>
-  <dialog>
+  <dialog class="create-task">
     <form>
       <div class="form-element">
         <label for="task_title">Title:</label>
@@ -46,16 +46,58 @@
         <input type="text" id="task_description" name="description">
       </div>
       <div class="form-element">
-        <select name="priority">
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
-        </select>
+        <p>Priority:</p>
+        <input type="radio" id="high-priority" name="priority" value ="high">
+        <label for="high-priority">High</label>
+        <input type="radio" id="medium-priority" name="priority" value ="medium">
+        <label for="medium-priority">Medium</label>
+        <input type="radio" id="low-priority" name="priority" value ="low" checked>
+        <label for="low-priority">Low</label>
       </div>
       <div class="form-element">
         <select name="project-name">
-          <option>Home</option>
         </select>
+      </div>
+      <div class="form-elemnt">
+        <button type="submit">confirm</button>
+        <button type="button" class="cancel">cancel</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog class="edit-dialog">
+    <form>
+      <div class="form-element">
+        <label for="task_title">Title:</label>
+        <input type="text" id="task_title" name="title">
+      </div>
+      <div class="form-element">
+        <label for="task_description">description:</label>
+        <input type="text" id="task_description" name="description">
+      </div>
+      <div class="form-element">
+        <p>Priority:</p>
+        <input type="radio" id="high-priority" name="priority" value ="high">
+        <label for="high-priority">High</label>
+        <input type="radio" id="medium-priority" name="priority" value ="medium">
+        <label for="medium-priority">Medium</label>
+        <input type="radio" id="low-priority" name="priority" value ="low">
+        <label for="low-priority">Low</label>
+      </div>
+      <div class="form-element">
+        <select id="project-name" name="project-name">
+        </select>
+      </div>
+      <div class="form-elemnt">
+        <button type="submit">confirm</button>
+        <button type="button" class="cancel">cancel</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog class="create-project">
+    <form>
+      <div class="form-element">
+        <label for="project-title">Title:</label>
+        <input type="text" id="project-title" name="title">
       </div>
       <div class="form-elemnt">
         <button type="submit">confirm</button>

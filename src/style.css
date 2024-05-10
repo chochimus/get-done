@@ -16,6 +16,7 @@
 body {
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   height: 100vh;
+  width: 100vw;
   display: grid;
   grid-template-rows: auto 1fr auto;
 }
@@ -73,6 +74,7 @@ nav button:not(.projects-button):focus {
   background-color: var(--border-green);
   border-right: 1rem solid var(--clicked-green);
 }
+
 .projects-button-wrapper{
   display: grid;
   grid-template-columns: 1fr auto;
@@ -86,8 +88,7 @@ nav button:not(.projects-button):focus {
   display: flex;
   align-items: center;
   padding: 0.6rem 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 4px 0px 4px 0px var(--shadow-green);
+  box-shadow: 1px 4px 4px -1px var(--shadow-green);
 }
 .homepage-title {
   margin-right: 1rem;
@@ -111,44 +112,55 @@ nav button:not(.projects-button):focus {
   fill: var(--clicked-green);
 }
 
-.remove-task {
+.edit-task, .remove-task,
+.edit-task:active, .remove-task:active {
   width: 1.4rem;
   background: none;
   border: none;
-
+  outline: none;
 }
-.remove-task svg {
+.edit-task svg,.remove-task svg, .add-task svg {
   pointer-events: none;
 }
-.remove-task:hover{
+.edit-task:hover, .remove-task:hover{
   fill: rgb(160, 160, 160);
 }
 
-div[class^="task-"] {
-  display: flex;
+.task {
+  display: grid;
+  justify-content: start;
+  align-items: center;
+  grid-template-columns: 400px auto auto;
 }
 .task-title {
+  max-width: 100%;
   font-size: 1rem;
   padding: 0rem 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dragging {
+  opacity: 0.7;
 }
 
 .high {
-  background-color: rgba(255, 94, 94, 0.26);
+  background-color: rgba(255, 94, 94, 0.5);
 }
 .high:hover {
-  background-color: rgba(255, 117, 117, 0.26);
+  background-color: rgba(255, 117, 117, 0.5);
 }
 .medium {
-  background-color: rgba(255, 255, 118, 0.288);
+  background-color: rgba(255, 255, 118, 0.5);
 }
 .medium:hover{
-  background-color: rgba(255, 255, 158, 0.288);
+  background-color: rgba(255, 255, 158, 0.5);
 }
 .low {
-  background-color: rgba(113, 255, 113, 0.267);
+  background-color: rgba(113, 255, 113, 0.5);
 }
 .low:hover{
-  background-color: rgba(150, 255, 150, 0.267);
+  background-color: rgba(150, 255, 150, 0.5);
 }
 
 footer {
