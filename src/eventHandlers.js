@@ -1,16 +1,19 @@
 import { Task, Project, allProjects} from "./task";
-import { createProjectElement, createTaskElement, editTask, updateTaskIndex} from "./domUtils";
+import { createProjectElement } from "./domManipulation/domProjectManipulation";
+import { createTaskElement, editTask, updateTaskIndex} from "./domManipulation/domTaskManagement"
+import { showInfoButtonIcon, minimizeInfoButtonIcon } from "./icons/icons"
 
-const dialog = document.querySelector('.create-task');
+//task creation 
+const dialog = document.getElementById('create-task');
 const form = dialog.querySelector('form');
-const close = document.querySelector('.cancel');
+const close = form.querySelector('.cancel');
 
 export const handleNewTask = (e, projectName)=>{
   const selector = form.querySelector(`select[name="project-name"]`);
   const currentProject = allProjects.find(project => project.name == projectName);
-  (currentProject.isHomePage) ? selector.hidden = false : selector.hidden = true;
+  selector.style.display = (currentProject.isHomePage) ? "block" : "none"; 
   const options = selector.querySelectorAll(`option`);
-  options.forEach(option => {if(option.textContent == currentProject.name) option.selected = true });
+  options.forEach(option => {if(option.value == currentProject.name) option.selected = true });
   dialog.showModal();
 }
 
@@ -25,7 +28,7 @@ form.addEventListener('submit', (e) => {
   const newTask = new Task(titleInput,descriptionInput,"",priorityInput, currentProject.name);
   currentProject.addToTaskList(newTask);
   createTaskElement(currentProject, newTask);
-
+  form.reset();
   dialog.close();
 });
 
@@ -33,6 +36,7 @@ close.addEventListener('click', () => {
   dialog.close();
 });
 
+// task removal
 export const handleRemoveTask = (e,currentProject) => {
   const project = allProjects.find(project => project.name == currentProject);
   const taskId = e.target.closest('.task').dataset.taskId;
@@ -41,9 +45,11 @@ export const handleRemoveTask = (e,currentProject) => {
   e.target.closest('.task').remove();
 }
 
-const editDialog = document.querySelector('.edit-dialog');
-const editForm = document.querySelector('.edit-dialog form');
-const editClose = document.querySelector('.edit-dialog .cancel');
+
+// task edit
+const editDialog = document.getElementById('edit-dialog');
+const editForm = editDialog.querySelector('form');
+const editClose = editForm.querySelector('.cancel');
 
 export const handleEditTask = (e, projectClassName) => {
   editDialog.showModal();
@@ -137,6 +143,24 @@ export const taskDragIntoProject = (e, name) => {
   draggable.dataset.name = name;
 }
 
+//show task info
+export function handleShowTaskInfo(e) {
+  const taskDiv = e.target.closest('.task'); 
+  const taskContent = taskDiv.querySelector('.task-content');
+  const taskDescription = taskContent.querySelector('.task-description');
+
+  if(taskDescription.innerHTML == "") return;
+
+  const isOpen = this.classList.toggle('active');
+  
+  if (isOpen){
+    this.innerHTML = minimizeInfoButtonIcon;
+    taskContent.style.maxHeight = taskContent.scrollHeight + "px";
+  } else {
+    this.innerHTML = showInfoButtonIcon;
+    taskContent.style.maxHeight = null;
+  }
+};
 
 const newProjectButton = document.querySelector('.projects-button');
 const projectDialog = document.querySelector('.create-project');
@@ -162,10 +186,18 @@ projectForm.addEventListener('submit', (e) => {
 });
 export function addProjectToOptions(title){
   const mainFormSelector = form.querySelector('select[name="project-name"]');
-  mainFormSelector.add(new Option(title));
+  mainFormSelector.add(new Option(title, title));
   const editFormSelector = editForm.querySelector('select[name="project-name"]');
-  editFormSelector.add(new Option(title));
+  editFormSelector.add(new Option(title, title));
 }
 projectFormClose.addEventListener("click", () => {
   projectDialog.close();
-})
+});
+
+
+const checkBoxCreate = document.getElementById('show-date-field-create');
+const dateInput = document.getElementById('date-input-create');
+dateInput.style.display = 'none';
+checkBoxCreate.addEventListener("change", (e) => {
+  dateInput.style.display = e.target.checked ? 'block' : 'none';
+});

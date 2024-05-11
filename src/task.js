@@ -6,7 +6,6 @@ export class Task {
     this.dueDate = dueDate;
     this.priority = priority;
     this.done = false;
-    this.project = project;
   }
   toggle() {
     this.done = !this.done;

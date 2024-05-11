@@ -1,9 +1,9 @@
-import { createProjectElement, updateDOM } from "./domUtils";
+import { loadAllProjects } from "./domManipulation/domProjectManipulation"
 import { allProjects } from "./task";
 import "./style.css"
 
 function loadHomePage(){
-  updateDOM(allProjects); 
+  loadAllProjects(allProjects); 
 }
 loadHomePage();
 /* currently

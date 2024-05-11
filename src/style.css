@@ -112,38 +112,50 @@ nav button:not(.projects-button):focus {
   fill: var(--clicked-green);
 }
 
-.edit-task, .remove-task,
-.edit-task:active, .remove-task:active {
+.edit-task, .remove-task, .show-task-info,
+.edit-task:active, .remove-task:active, .show-task-info:active
+ {
   width: 1.4rem;
   background: none;
   border: none;
   outline: none;
 }
-.edit-task svg,.remove-task svg, .add-task svg {
+.edit-task svg,.remove-task svg, .add-task svg, .show-task-info svg {
   pointer-events: none;
 }
-.edit-task:hover, .remove-task:hover{
+.edit-task:hover, .remove-task:hover, .show-task-info:hover {
   fill: rgb(160, 160, 160);
 }
 
 .task {
+  padding: 0.4rem;
+}
+.task-header {
   display: grid;
   justify-content: start;
   align-items: center;
-  grid-template-columns: 400px auto auto;
+  grid-template-columns: 200px auto auto auto;
 }
 .task-title {
   max-width: 100%;
-  font-size: 1rem;
-  padding: 0rem 1rem;
+  font-size: 1.2rem;
+  padding: 0.2rem 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.task-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
 }
 
 .dragging {
   opacity: 0.7;
 }
 
+
+/*Form elements styles*/
 .high {
   background-color: rgba(255, 94, 94, 0.5);
 }
@@ -165,4 +177,55 @@ nav button:not(.projects-button):focus {
 
 footer {
   display: flex;
+}
+
+.switch {
+ font-size: 17px;
+ position: relative;
+ display: inline-block;
+ width: 3.7em;
+ height: 1.8em;
+}
+
+.switch input {
+ display: none;
+ opacity: 0;
+ width: 0;
+ height: 0;
+}
+
+.slider {
+ position: absolute;
+ cursor: pointer;
+ top: 0;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ background-color: #7e7e7e;
+ transition: .2s;
+ border-radius: 30px;
+}
+
+.slider:before {
+ position: absolute;
+ content: "";
+ height: 1.4em;
+ width: 1.4em;
+ border-radius: 20px;
+ left: 0.2em;
+ bottom: 0.2em;
+ background-color: white;
+ transition: .4s;
+}
+
+input:checked + .slider {
+ background-color: var(--medium-green);
+}
+
+input:focus + .slider {
+ box-shadow: 0 0 1px var(--medium-green);
+}
+
+input:checked + .slider:before {
+ transform: translateX(1.9em);
 }
