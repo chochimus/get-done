@@ -1,3 +1,5 @@
+import {} from "date-fns"
+
 export class Task {
   constructor(name="", description="", dueDate="", priority="", project=""){
     this.id = this.id = idGenerator.getNextId();;
@@ -6,6 +8,7 @@ export class Task {
     this.dueDate = dueDate;
     this.priority = priority;
     this.done = false;
+    this.repeating = "none";
   }
   toggle() {
     this.done = !this.done;
@@ -37,8 +40,15 @@ export class Task {
   setPriority(priority){
     this.priority = priority;
   }
+  setRepeating(frequency){
+    switch (frequency){
+    case'daily':
+    case'weekly':
+    case'monthy':
+    case'yearly':
+    }
+  }
 }
-
 //last edit
 export class Project {
   constructor(name){

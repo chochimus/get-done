@@ -1,4 +1,5 @@
-import { handleNewTask, addProjectToOptions, taskDragIntoProject} from "../eventHandlers";
+import { handleNewTask, addProjectToOptions, taskDragIntoProject, loadProjectPage} from "../eventHandlers";
+import { allProjects } from "../task";
 import { addHtmlElement } from "./domUtils";
 
 export const createProjectElement = (project) => {
@@ -8,11 +9,23 @@ export const createProjectElement = (project) => {
 
 
   addHtmlElement(`.${project.name}`, `project-header`, 'div', '');
-  addHtmlElement(`.${project.name} .project-header`, `project-title`, 'h1', `${project.name.replace(/\_+/g,' ')}`);
+
+
+  const projectTitle = addHtmlElement(`.${project.name} .project-header`, `project-title`, 'h1', `${project.name.replace(/\_+/g,' ')}`);
   const newTaskButton = addHtmlElement(`.${project.name} .project-header`, 'add-task', 'button', newButtonIcon);
   newTaskButton.addEventListener("click", (e) => handleNewTask(e, project.name));
 
-  if(project.isHomePage) addProjectToOptions(project.name);
+  if(project.isHomePage) {
+    addProjectToOptions(project.name);
+    projectTitle.textContent = "Home Page"
+  }
+
+  //nav bar
+  if(!project.isHomePage) {
+  const loadProjectButton = addHtmlElement(`.project-buttons`, 'project-select-button', 'button' , `${project.name.replace(/\_+/g,' ')}`);
+  loadProjectButton.classList.add(project.name);
+  loadProjectButton.addEventListener("click", loadProjectPage);
+  }
 }
 
 export function loadAllProjects(ProjectArray) {
@@ -21,6 +34,20 @@ export function loadAllProjects(ProjectArray) {
   }
 }
 
+export function drawCurrentProject(project){
+  const projectDiv = addHtmlElement('.projects', `project-container`, 'div', '');
+  projectDiv.classList.add(`${project.name}`);
+  projectDiv.addEventListener("dragenter", (e) => taskDragIntoProject(e, project.name));
+
+
+  addHtmlElement(`.projects .${project.name}`, `project-header`, 'div', '');
+
+
+  const projectTitle = addHtmlElement(`.${project.name} .project-header`, `project-title`, 'h1', `${project.name.replace(/\_+/g,' ')}`);
+  const newTaskButton = addHtmlElement(`.${project.name} .project-header`, 'add-task', 'button', newButtonIcon);
+  newTaskButton.addEventListener("click", (e) => handleNewTask(e, project.name));
+
+}
+
 const newButtonIcon = `
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="2 4 20 16">
-<path d="M20,4C21.11,4 22,4.89 22,6V18C22,19.11 21.11,20 20,20H4C2.89,20 2,19.11 2,18V6C2,4.89 2.89,4 4,4H20M8.5,15V9H7.25V12.5L4.75,9H3.5V15H4.75V11.5L7.3,15H8.5M13.5,10.26V9H9.5V15H13.5V13.75H11V12.64H13.5V11.38H11V10.26H13.5M20.5,14V9H19.25V13.5H18.13V10H16.88V13.5H15.75V9H14.5V14A1,1 0 0,0 15.5,15H19.5A1,1 0 0,0 20.5,14Z" /></svg>`;
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus-circle</title><path d="M17,13H13V17H11V13H7V11H11V7H13V11H17M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>`;

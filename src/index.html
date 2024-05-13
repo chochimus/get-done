@@ -15,16 +15,27 @@
   <div class="main">
     <nav>
       <ul class="nav-buttons">
-        <button class="home-button"><svg xmlns="http://www.w3.org/2000/svg" 
-          viewBox="0 0 24 24"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
-            Home</button>
-        <button class="today-button"><svg xmlns="http://www.w3.org/2000/svg" 
-          viewBox="0 0 24 24"><path d="M6 1V3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.9 20.11 3 19 3H18V1H16V3H8V1H6M5 8H19V19H5V8M11 9V14H13V9H11M11 16V18H13V16H11Z" /></svg>Today</button>
-        <div class="projects-button-wrapper">
+        <li>
+          <button class="home-button"><svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
+              Home</button>
+        </li>
+        <li>
+          <button class="today-button"><svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"><path d="M6 1V3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.9 20.11 3 19 3H18V1H16V3H8V1H6M5 8H19V19H5V8M11 9V14H13V9H11M11 16V18H13V16H11Z" /></svg>Today</button>
+        </li>
+        <li>
+          <div class="projects-button-wrapper">
           <p>Projects</p></o><button class="projects-button"><svg xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
           </button>
-        </div>
+          </div>
+        </li>
+        <li>
+          <div class="project-buttons">
+            
+          </div>
+        </li>
         </ul>
     </nav>
     <div class="projects">
@@ -33,27 +44,29 @@
   <dialog id="create-task">
     <form>
       <div class="form-element">
-        <label for="task-title-create">Title:</label>
-        <input type="text" id="task-title-create" name="title">
+        <label for="task-title-create"></label>
+        <input type="text" id="task-title-create" name="title" placeholder="Title">
       </div>
       <div class="form-element">
-        <label for="task-description-create">description:</label>
-        <input type="text" id="task-description-create" name="description">
+        <label for="task-description-create"></label>
+        <input type="text" id="task-description-create" name="description" placeholder="Description">
       </div>
       <div class="form-element">
         <p>Priority:</p>
-        <label for="high-priority-create">
-            <input type="radio" id="high-priority-create" name="priority" value="high">
-            <span>High</span>
-        </label>
-        <label for="medium-priority-create">
-            <input type="radio" id="medium-priority-create" name="priority" value="medium">
-            <span>Medium</span>
-        </label>
-        <label for="low-priority-create">
-            <input type="radio" id="low-priority-create" name="priority" value="low" checked>
-            <span>Low</span>
-        </label>
+        <div>          
+          <label for="high-priority-create">
+              <input type="radio" id="high-priority-create" name="priority" value="high">
+              <span class="high">High</span>
+          </label>
+          <label for="medium-priority-create">
+              <input type="radio" id="medium-priority-create" name="priority" value="medium">
+              <span class="medium">Medium</span>
+          </label>
+          <label for="low-priority-create">
+              <input type="radio" id="low-priority-create" name="priority" value="low" checked>
+              <span class="low">Low</span>
+          </label>
+        </div>
       </div>
       <div class="form-element">
         <label for="project-name-selector-create">
@@ -62,6 +75,7 @@
         </label>
       </div>
       <div class="form-element">
+        <p>Date?</p>
         <label for="show-date-field-create" class="switch">
           <input type="checkbox" id="show-date-field-create" name="show-date-button" value="date">
           <span class="slider"></span>
@@ -81,27 +95,29 @@
   <dialog id="edit-dialog">
     <form>
       <div class="form-element">
-        <label for="task-title-edit">Title:</label>
-        <input type="text" id="task-title-edit" name="title">
+        <label for="task-title-edit"></label>
+        <input type="text" id="task-title-edit" name="title" placeholder="Title">
       </div>
       <div class="form-element">
-        <label for="task-description-edit">description:</label>
-        <input type="text" id="task-description-edit" name="description">
+        <label for="task-description-edit"></label>
+        <input type="text" id="task-description-edit" name="description" placeholder="Description">
       </div>
       <div class="form-element">
         <p>Priority:</p>
-        <label for="high-priority-edit">
-          <input type="radio" id="high-priority-edit" name="priority" value="high">
-          <span>High</span>
-        </label>
-        <label for="medium-priority-edit">
-          <input type="radio" id="medium-priority-edit" name="priority" value="medium">
-          <span>Medium</span>
-       </label>
-       <label for="low-priority-edit">
-          <input type="radio" id="low-priority-edit" name="priority" value="low" checked>
-          <span>Low</span>
-        </label>
+        <div>     
+          <label for="high-priority-edit">
+            <input type="radio" id="high-priority-edit" name="priority" value="high">
+            <span class="high">High</span>
+          </label>
+          <label for="medium-priority-edit">
+            <input type="radio" id="medium-priority-edit" name="priority" value="medium">
+            <span class="medium">Medium</span>
+                 </label>
+                 <label for="low-priority-edit">
+            <input type="radio" id="low-priority-edit" name="priority" value="low" checked>
+            <span class="low">Low</span>
+          </label>
+        </div>
       </div>
       <div class="form-element">
         <label for="project-name-edit">
@@ -109,6 +125,7 @@
           </select>
         </label>
       </div>
+      <p>Date?</p>
       <div class="form-element">
         <label class="switch" for="show-date-field-edit">
           <input type="checkbox" id="show-date-field-edit" name="show-date-button">

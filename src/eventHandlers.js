@@ -1,5 +1,5 @@
 import { Task, Project, allProjects} from "./task";
-import { createProjectElement } from "./domManipulation/domProjectManipulation";
+import { createProjectElement, drawCurrentProject } from "./domManipulation/domProjectManipulation";
 import { createTaskElement, editTask, updateTaskIndex} from "./domManipulation/domTaskManagement"
 import { showInfoButtonIcon, minimizeInfoButtonIcon } from "./icons/icons"
 
@@ -14,6 +14,10 @@ export const handleNewTask = (e, projectName)=>{
   selector.style.display = (currentProject.isHomePage) ? "block" : "none"; 
   const options = selector.querySelectorAll(`option`);
   options.forEach(option => {if(option.value == currentProject.name) option.selected = true });
+
+  const parentDiv = e.currentTarget.parentElement;
+  dialog.style.left = parentDiv.offsetLeft + "px";
+  dialog.style.top = parentDiv.offsetTop + parentDiv.offsetHeight + "px";
   dialog.showModal();
 }
 
@@ -24,8 +28,9 @@ form.addEventListener('submit', (e) => {
   const descriptionInput = formData.get("description");
   const priorityInput = formData.get("priority");
   const projectInput = formData.get("project-name");
+  const dateInput = formData.get("date-input");
   const currentProject = allProjects.find(project => project.name == projectInput);
-  const newTask = new Task(titleInput,descriptionInput,"",priorityInput, currentProject.name);
+  const newTask = new Task(titleInput,descriptionInput,dateInput,priorityInput, currentProject.name);
   currentProject.addToTaskList(newTask);
   createTaskElement(currentProject, newTask);
   form.reset();
@@ -52,6 +57,11 @@ const editForm = editDialog.querySelector('form');
 const editClose = editForm.querySelector('.cancel');
 
 export const handleEditTask = (e, projectClassName) => {
+
+  const parentDiv = e.target.parentElement;
+
+  editDialog.style.left = parentDiv.offsetLeft + "px";
+  editDialog.style.top = parentDiv.offsetTop + parentDiv.offsetHeight + "px";
   editDialog.showModal();
   const selector = editForm.querySelector(`select[name="project-name"]`);
   const currentProject = allProjects.find(project => project.name == projectClassName);
@@ -144,30 +154,38 @@ export const taskDragIntoProject = (e, name) => {
 }
 
 //show task info
-export function handleShowTaskInfo(e) {
+export const handleShowTaskInfo = (e) => {
+  const infoButton = e.target;
   const taskDiv = e.target.closest('.task'); 
   const taskContent = taskDiv.querySelector('.task-content');
   const taskDescription = taskContent.querySelector('.task-description');
 
   if(taskDescription.innerHTML == "") return;
 
-  const isOpen = this.classList.toggle('active');
+  const isOpen = taskDiv.classList.toggle('active');
   
   if (isOpen){
-    this.innerHTML = minimizeInfoButtonIcon;
+    infoButton.innerHTML = minimizeInfoButtonIcon;
     taskContent.style.maxHeight = taskContent.scrollHeight + "px";
+    taskContent.style.padding = "0.5rem 1rem";
   } else {
-    this.innerHTML = showInfoButtonIcon;
+    infoButton.innerHTML = showInfoButtonIcon;
     taskContent.style.maxHeight = null;
+    taskContent.style.padding = "0 1rem"
   }
 };
+
+//project creation
 
 const newProjectButton = document.querySelector('.projects-button');
 const projectDialog = document.querySelector('.create-project');
 const projectForm = projectDialog.querySelector('form');
 const projectFormClose = projectForm.querySelector('.cancel');
 
-newProjectButton.addEventListener("click", () => {
+newProjectButton.addEventListener("click", (e) => {
+  const projectButtonDiv = e.target;
+  projectDialog.style.left = projectButtonDiv.offsetLeft + projectButtonDiv.offsetWidth + "px";
+  projectDialog.style.top = projectButtonDiv.offsetTop + "px";
   projectDialog.showModal();
 });
 projectForm.addEventListener('submit', (e) => {
@@ -194,10 +212,31 @@ projectFormClose.addEventListener("click", () => {
   projectDialog.close();
 });
 
+export const loadProjectPage = (e) => {
+  const projectDiv = document.querySelector('.projects');
+  const projectName = e.target.classList[1];
+  projectDiv.innerHTML = '';
+  const currentProject = allProjects.find(project => project.name == projectName);
+  drawCurrentProject(currentProject);
+
+  const createProjectButton = document.querySelector('.projects-button');
+  createProjectButton.disabled = true;
+}
+
+
+
+//form listener for showing date
 
 const checkBoxCreate = document.getElementById('show-date-field-create');
 const dateInput = document.getElementById('date-input-create');
 dateInput.style.display = 'none';
 checkBoxCreate.addEventListener("change", (e) => {
   dateInput.style.display = e.target.checked ? 'block' : 'none';
+});
+
+const checkBoxEdit = document.getElementById('show-date-field-edit');
+const dateInputEdit = document.getElementById('date-input-edit');
+dateInputEdit.style.display = 'none';
+checkBoxEdit.addEventListener("change", (e) => {
+  dateInputEdit.style.display = e.target.checked ? 'block' : 'none';
 });

@@ -5,7 +5,7 @@ import { removeButtonIcon, editTaskButtonIcon, showInfoButtonIcon } from "../ico
 export const createTaskElement = (parent, task) => {
   const elementParent = `.${parent.name}`;
   const taskInfo = task.getInfo();
-  const taskDiv = addHtmlElement(`${elementParent}`, `task`, 'div', '');
+  const taskDiv = addHtmlElement(`.projects ${elementParent}`, `task`, 'div', '');
   taskDiv.classList.add(taskInfo.priority);
   taskDiv.dataset.taskId = taskInfo.id;
   taskDiv.draggable = true;
@@ -28,7 +28,7 @@ export const createTaskElement = (parent, task) => {
 
 
   const taskContent = addHtmlElement(taskDiv, 'task-content', 'div', '');
-  const taskDescription = addHtmlElement(taskContent, 'task-description', 'p', taskInfo.description);
+  const taskDescription = addHtmlElement(taskContent, 'task-description', 'p', `-${taskInfo.description}`);
 
 
   return taskDiv;
@@ -48,6 +48,11 @@ export const editTask = (parent, task) => {
   if(taskPriority !== taskInfo.priority ) {
     taskDiv.classList.remove(taskPriority);
     taskDiv.classList.add(taskInfo.priority);
+  }
+
+  const taskDescription = taskDiv.querySelector('.task-description');
+  if(taskDescription.textContent != taskInfo.description) {
+    taskDescription.textContent = `-${taskInfo.description}`;
   }
 }
 

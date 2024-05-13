@@ -9,7 +9,7 @@
   --clicked-green: #15803d;
   --border-green: #22c55e;
   --edge-green: #bbf7d0;
-  --shadow-green: #052e16;
+  --shadow-green: #052e167c;
 }
 
 
@@ -40,15 +40,27 @@ header {
   grid-template-columns: auto 1fr;
 }
 
+ul {
+  list-style: none;
+}
+
 nav {
   font-size: 1.6rem;
   font-weight: bold;
-  width: 10rem;
+  
   background-color: var(--light-green);
   box-shadow: 0px 1px 4px 0px var(--clicked-green);
 }
 nav svg {
   width: 3rem;
+}
+
+.nav-buttons .project-select-button {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: normal;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .nav-buttons {
@@ -57,7 +69,7 @@ nav svg {
 .nav-buttons button {
   background-color: var(--light-green);
   border: none;
-  padding: 1rem 0rem;
+  padding: 1rem 1rem;
   width: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
@@ -98,17 +110,16 @@ nav button:not(.projects-button):focus {
   background: none;
   border: none;
   fill: var(--medium-green);
-  width: 2.5rem;
-  height: 2rem;
-  border-radius: 0.3rem;
-  box-shadow: 0px 0px 2px 0px var(--shadow-green);
+  width: 2rem;
+  height: auto;
+  border-radius: 1rem;
   line-height: 0;
 }
 
-.add-task svg:hover{
-  fill: var(--hover-green);
+.add-task:hover{
+  fill: var(--light-green);
 }
-.add-task svg:active{
+.add-task:active{
   fill: var(--clicked-green);
 }
 
@@ -120,7 +131,7 @@ nav button:not(.projects-button):focus {
   border: none;
   outline: none;
 }
-.edit-task svg,.remove-task svg, .add-task svg, .show-task-info svg {
+.edit-task svg,.remove-task svg, .add-task svg, .show-task-info svg, .projects-button svg {
   pointer-events: none;
 }
 .edit-task:hover, .remove-task:hover, .show-task-info:hover {
@@ -138,40 +149,143 @@ nav button:not(.projects-button):focus {
 }
 .task-title {
   max-width: 100%;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 0.2rem 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.task-due-date-header {
+  font-size: .7rem;
+}
 
 .task-content {
+  font-size: 0.8rem;
+  color: rgb(80, 80, 80);
   max-height: 0;
+  padding: 0;
   overflow: hidden;
-  transition: max-height 0.2s ease-out;
+  transition: max-height 0.3s ease-out;
+}
+
+.task-content .active{
+  padding: 10rem;
 }
 
 .dragging {
   opacity: 0.7;
 }
+/*Task Form Styles*/
+dialog {
+  border: none;
+  border-radius: 0.4rem;
+  padding: 2rem 1rem;
+}
+
+dialog button {
+  padding: 0.5rem;
+  background-color: var(--medium-green);
+  border: none;
+  border-radius: 0.2rem;
+}
+
+dialog select {
+  width: 100%;
+}
+
+.form-element { 
+  margin-bottom: 0.4rem;
+}
+
+dialog button:hover {
+  background-color: var(--hover-green);
+}
+
+dialog button:active {
+  background-color: var(--clicked-green);
+}
+
+/*priority checkbox */
+input {
+  font-size: 1rem;
+  outline: none;
+  border: 1px solid #bdbdbd;
+  border-radius: 0.4rem;
+  padding: 0.1rem;
+  margin-bottom: 0.2rem;
+}
+
+.form-element input[type="radio"]{
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.form-element [type="radio"]:checked + span.low {
+  box-shadow: 0 0 0 0.0625em rgba(113, 255, 113, 0.75);
+  background-color: rgba(113, 255, 113, 0.75);
+  z-index: 1;
+}
+
+.form-element [type="radio"]:checked + span.high {
+  box-shadow: 0 0 0 0.0625em rgba(255, 94, 94, 0.75);
+  background-color: rgba(255, 94, 94, 0.75);
+  z-index: 1;
+}
+.form-element [type="radio"]:checked + span.medium {
+  box-shadow: 0 0 0 0.0625em rgba(255, 255, 118, 1);
+  background-color: rgba(255, 255, 118, 0.75);
+  z-index: 1;
+}
 
 
-/*Form elements styles*/
-.high {
+label[for*="priority"] span {
+  display: block;
+  cursor: pointer;
+  padding: 0.375em .75em;
+  background-color: white;
+  position: relative;
+  margin-left: .0625em;
+  letter-spacing: .05em;
+  text-align: center;
+  transition: background-color .5s ease;
+}
+
+
+label[for*="priority"]:first-child span {
+  border-radius: .375em 0 0 .375em;
+}
+
+label[for*="priority"]:last-child span {
+  border-radius: 0 .375em .375em 0;
+}
+
+
+.form-element div {
+  display: flex;
+}
+
+
+/*Task priority styles*/
+.task.high {
   background-color: rgba(255, 94, 94, 0.5);
 }
-.high:hover {
+.task.high:hover {
   background-color: rgba(255, 117, 117, 0.5);
 }
-.medium {
+.task.medium {
   background-color: rgba(255, 255, 118, 0.5);
 }
-.medium:hover{
-  background-color: rgba(255, 255, 158, 0.5);
+.task.medium:hover{
+  background-color: rgba(255, 255, 158, 0.61);
 }
-.low {
+.task.low {
   background-color: rgba(113, 255, 113, 0.5);
 }
-.low:hover{
+.task.low:hover{
   background-color: rgba(150, 255, 150, 0.5);
 }
 
@@ -179,6 +293,8 @@ footer {
   display: flex;
 }
 
+
+/*date switch styles*/
 .switch {
  font-size: 17px;
  position: relative;
@@ -218,14 +334,14 @@ footer {
  transition: .4s;
 }
 
-input:checked + .slider {
+.switch input:checked + .slider {
  background-color: var(--medium-green);
 }
 
-input:focus + .slider {
+.switch input:focus + .slider {
  box-shadow: 0 0 1px var(--medium-green);
 }
 
-input:checked + .slider:before {
+.switch input:checked + .slider:before {
  transform: translateX(1.9em);
 }
