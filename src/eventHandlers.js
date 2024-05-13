@@ -1,8 +1,16 @@
 import { Task, Project, allProjects} from "./task";
-import { createProjectElement, drawCurrentProject } from "./domManipulation/domProjectManipulation";
-import { createTaskElement, editTask, updateTaskIndex} from "./domManipulation/domTaskManagement"
+import { createProjectElement, drawCurrentProject, loadAllProjects } from "./domManipulation/domProjectManipulation";
+import { createTaskElement, editTask, loadAllTasks, updateTaskIndex} from "./domManipulation/domTaskManagement"
 import { showInfoButtonIcon, minimizeInfoButtonIcon } from "./icons/icons"
 
+const homeButton = document.getElementById('home-button');
+homeButton.addEventListener('click', () => {
+  const projectContext = document.getElementById('projects');
+  const navDiv = document.querySelector('.project-buttons');
+  navDiv.innerHTML = "";
+  projectContext.innerHTML = "";
+  loadAllProjects(allProjects);
+})
 //task creation 
 const dialog = document.getElementById('create-task');
 const form = dialog.querySelector('form');
@@ -45,9 +53,11 @@ close.addEventListener('click', () => {
 export const handleRemoveTask = (e,currentProject) => {
   const project = allProjects.find(project => project.name == currentProject);
   const taskId = e.target.closest('.task').dataset.taskId;
+  console.log(project.library)
   project.removeFromTaskListByTaskId(taskId);
   updateTaskIndex(project);
   e.target.closest('.task').remove();
+  console.log(project.library)
 }
 
 
@@ -198,10 +208,14 @@ projectForm.addEventListener('submit', (e) => {
   } 
   const newProject = new Project(title);
   allProjects.push(newProject);
-  createProjectElement(newProject);
+  const projectsContext = document.getElementById('projects');
+  projectsContext.innerHTML = "";
+  const thisProjectDiv = createProjectElement(newProject);
   addProjectToOptions(title);
   projectDialog.close();
 });
+
+
 export function addProjectToOptions(title){
   const mainFormSelector = form.querySelector('select[name="project-name"]');
   mainFormSelector.add(new Option(title, title));
@@ -213,14 +227,12 @@ projectFormClose.addEventListener("click", () => {
 });
 
 export const loadProjectPage = (e) => {
-  const projectDiv = document.querySelector('.projects');
+  const projectDiv = document.getElementById('projects');
   const projectName = e.target.classList[1];
   projectDiv.innerHTML = '';
   const currentProject = allProjects.find(project => project.name == projectName);
   drawCurrentProject(currentProject);
-
-  const createProjectButton = document.querySelector('.projects-button');
-  createProjectButton.disabled = true;
+  loadAllTasks(currentProject)
 }
 
 

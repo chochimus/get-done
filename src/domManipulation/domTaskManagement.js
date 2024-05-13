@@ -3,9 +3,9 @@ import { handleEditTask, handleRemoveTask, handleShowTaskInfo, handleTaskDrag } 
 import { removeButtonIcon, editTaskButtonIcon, showInfoButtonIcon } from "../icons/icons";
 
 export const createTaskElement = (parent, task) => {
-  const elementParent = `.${parent.name}`;
+  const elementParent = `.${parent.name} .task-container`;
   const taskInfo = task.getInfo();
-  const taskDiv = addHtmlElement(`.projects ${elementParent}`, `task`, 'div', '');
+  const taskDiv = addHtmlElement(`#projects ${elementParent}`, `task`, 'div', '');
   taskDiv.classList.add(taskInfo.priority);
   taskDiv.dataset.taskId = taskInfo.id;
   taskDiv.draggable = true;
@@ -57,9 +57,12 @@ export const editTask = (parent, task) => {
 }
 
 export const updateTaskIndex = (project) => {
-  const taskElements = document.querySelectorAll(`.${project.name} .task`);
-  taskElements.forEach((element, index) => {
-    element.setAttribute('task-number', index);
+  const taskElements = document.querySelector(`.${project.name}.task-container`);
+  taskElements.innerHTML = "";
+
+  project.library.forEach((task) => {
+    console.log(task)
+    createTaskElement(project, task);
   })
 }
 

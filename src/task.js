@@ -80,7 +80,8 @@ export class Project {
     if (priority !== task.priority) task.priority = priority;
   }
   removeFromTaskListByTaskId(taskId) {
-    const index = this.library.findIndex(task => task.id === taskId);
+    console.log(taskId)
+    const index = this.library.findIndex(task => task.id === Number(taskId));
     if (index !== -1) {
       this.library.splice(index, 1);
     }

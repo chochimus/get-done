@@ -1,9 +1,10 @@
 import { handleNewTask, addProjectToOptions, taskDragIntoProject, loadProjectPage} from "../eventHandlers";
 import { allProjects } from "../task";
+import { loadAllTasks } from "./domTaskManagement";
 import { addHtmlElement } from "./domUtils";
 
 export const createProjectElement = (project) => {
-  const projectDiv = addHtmlElement('.projects', `project-container`, 'div', '');
+  const projectDiv = addHtmlElement('#projects', `project-container`, 'div', '');
   projectDiv.classList.add(`${project.name}`);
   projectDiv.addEventListener("dragenter", (e) => taskDragIntoProject(e, project.name));
 
@@ -14,6 +15,9 @@ export const createProjectElement = (project) => {
   const projectTitle = addHtmlElement(`.${project.name} .project-header`, `project-title`, 'h1', `${project.name.replace(/\_+/g,' ')}`);
   const newTaskButton = addHtmlElement(`.${project.name} .project-header`, 'add-task', 'button', newButtonIcon);
   newTaskButton.addEventListener("click", (e) => handleNewTask(e, project.name));
+
+  const taskContainer = addHtmlElement(projectDiv, 'task-container', 'div', '');
+  taskContainer.classList.add('tasks');
 
   if(project.isHomePage) {
     addProjectToOptions(project.name);
@@ -26,21 +30,23 @@ export const createProjectElement = (project) => {
   loadProjectButton.classList.add(project.name);
   loadProjectButton.addEventListener("click", loadProjectPage);
   }
+  return projectDiv;
 }
 
 export function loadAllProjects(ProjectArray) {
   for(const project of ProjectArray){
     createProjectElement(project);
+    loadAllTasks(project);
   }
 }
 
 export function drawCurrentProject(project){
-  const projectDiv = addHtmlElement('.projects', `project-container`, 'div', '');
+  const projectDiv = addHtmlElement('#projects', `project-container`, 'div', '');
   projectDiv.classList.add(`${project.name}`);
   projectDiv.addEventListener("dragenter", (e) => taskDragIntoProject(e, project.name));
 
 
-  addHtmlElement(`.projects .${project.name}`, `project-header`, 'div', '');
+  addHtmlElement(`#projects .${project.name}`, `project-header`, 'div', '');
 
 
   const projectTitle = addHtmlElement(`.${project.name} .project-header`, `project-title`, 'h1', `${project.name.replace(/\_+/g,' ')}`);
